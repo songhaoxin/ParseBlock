@@ -1,6 +1,7 @@
 package types
 
-type Hash [32]byte
+//type Hash [32]byte
+type Hash = string
 
 type BlockNode struct {
 	BlockNumber int

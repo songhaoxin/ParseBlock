@@ -2,13 +2,16 @@ package main
 
 import (
 	"clmwallet/handler"
-	"fmt"
+	"time"
 )
 
 func main() {
 	hdl := handler.InitBlockHandler()
-	for {
+	hdl.FetchBlocksDelegate = handler.InitFethHandler()
+	///for ; ;  {
 		hdl.HandleTask()
-		fmt.Println("handing task ...")
-	}
+	//}
+	time.Sleep(1 * time.Second)
+
+
 }

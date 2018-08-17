@@ -2,6 +2,7 @@ package types
 
 import (
 	"sync"
+	"fmt"
 )
 
 type BlockPool struct {
@@ -66,7 +67,9 @@ func (b *BlockPool) ReceiveBlocks(bs <-chan *BlockNode, latestNumber int) {
 
 func (b *BlockPool) ReceiveBlocks(bs chan *BlockNode) {
 	for n := range bs {
-		b.insert(n)
+		fmt.Println(n.BlockNumber)
+		fmt.Println(n.BlockHash)
+		//b.insert(n)
 	}
 }
 

@@ -19,6 +19,8 @@ const chanCap = 100
 
 func InitBlockHandler() *BlockHandler {
 	hdl := &BlockHandler{}
+	hdl.blockPool = types.InitBlockPool()
+	hdl.pendingPool = types.InitPendingPool()
 	hdl.blockChan = make(chan *types.BlockNode, chanCap)
 	return hdl
 }
@@ -27,15 +29,12 @@ func (hdl *BlockHandler) HandleTask() {
 	if nil == hdl.FetchBlocksDelegate || nil == hdl.blockPool {
 		return
 	}
-	/*
-		_, latestBlockNumber := go hdl.FetchBlocksDelegate.FetchBlocks(hdl.blockPool.LatestNumber(), hdl.blockChan)
-		if latestBlockNumber != -1 {
-			hdl.latestBlockNumber = latestBlockNumber
-		}
-	*/
+
 	go hdl.FetchBlocksDelegate.FetchBlocks(hdl.latestBlockNumber, hdl.blockChan)
 	//更新区块池区块
+	go hdl.blockPool.ReceiveBlocks(hdl.blockChan)
 	//处理确认过的交易
+
 	//处理需要重新处理的交易
 
 }

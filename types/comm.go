@@ -7,6 +7,11 @@ type BlockNode struct {
 	BlockNumber int
 	BlockHash   Hash
 }
+type BlockNodeFecthed struct {
+	BlockNumber   int
+	BlockHash     Hash
+	HighestNumber int
+}
 
 type AffiremTransInterface interface {
 	AffiremTrans(blockNumber int, blockHash Hash)

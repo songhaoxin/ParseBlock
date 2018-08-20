@@ -1,19 +1,50 @@
 package handler
 
-import "clmwallet/types"
+import (
+	"clmwallet/types"
+	"fmt"
 
-type FethBlockHandler struct {
+	"github.com/ethereum/go-ethereum/rpc"
+)
+
+const (
+	serviceHost = "http://localhost:7545"
+)
+
+type FecthBlockHandler struct {
 }
 
-func InitFethHandler() *FethBlockHandler {
-	return &FethBlockHandler{}
+func InitFecthHandler() *FecthBlockHandler {
+	return &FecthBlockHandler{}
 }
 
-func (f FethBlockHandler) FetchBlocks(localLastBlockNumber int, blocks chan *types.BlockNode) (isFethed bool, chainLatestBlockNumber int) {
-	for index := 0; index < 30; index++ {
-		n := &types.BlockNode{index, "0x001"}
-		blocks <- n
+func (f FecthBlockHandler) FecthBlocks(localLastBlockNumber int, blocks chan *types.BlockNode) {
+
+	client, err := rpc.Dial("http://localhost:7545")
+	if err != nil {
+		fmt.Println("rpc.Dial err", err)
+		return
 	}
 
-	return false, 10
+	var blockInfo = make(map[string]interface{})
+	err = client.Call(&blockInfo, "eth_getBlockByNumber", "latest", "true")
+	if err != nil {
+		fmt.Println("client.Call error", err)
+		return
+	}
+
+	f.ParseBlock(blockInfo)
+
+}
+
+/// 解析区块，并记录跟本平台相关的帐号地址
+func (f FecthBlockHandler) ParseBlock(blockInfo map[string]interface{}) {
+	if nil == blockInfo {
+		trans := blockInfo["transcations"]
+		if nil != trans {
+
+		}
+		return
+	}
+
 }

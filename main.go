@@ -1,9 +1,6 @@
 package main
 
-import (
-	"clmwallet/handler"
-	"clmwallet/types"
-)
+import "clmwallet/modles/blocklist"
 
 func main() {
 	/*
@@ -14,7 +11,14 @@ func main() {
 		//}
 		time.Sleep(1 * time.Second)
 	*/
-	fethHdl := handler.InitFecthHandler()
-	chains := make(chan *types.BlockNode, 100)
-	fethHdl.FecthBlocks(0, chains)
+	//fethHdl := handler.InitFecthParserHandler()
+	//chains := make(chan *types.BlockNode, 100)
+	//fethHdl.FecthBlocks(0
+
+	node := &blocklist.BlockNodeInfo{}
+	node.BlockNumber = "abc"
+	node.BlockHash = "xxx"
+	node.Store()
+	print(node)
+
 }
